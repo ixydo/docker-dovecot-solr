@@ -12,6 +12,19 @@ want to modify the tokenizers and filters.
     <fieldType name="string" class="solr.StrField" />
     <fieldType name="long" class="solr.TrieLongField" />
     <fieldType name="boolean" class="solr.BoolField" />
+    <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+      <analyzer type="index">
+        <tokenizer name="standard"/>
+        <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
+        <filter name="lowercase"/>
+      </analyzer>
+      <analyzer type="query">
+        <tokenizer name="standard"/>
+        <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
+        <filter expand="true" ignoreCase="true" synonyms="synonyms.txt" name="synonymGraph"/>
+        <filter name="lowercase"/>
+      </analyzer>
+    </fieldType>
 
     <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
       <analyzer type="index">
