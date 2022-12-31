@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Solr managed schema - automatically generated - DO NOT EDIT -->
+<schema name="dovecot" version="1.5">
+  <uniqueKey>id</uniqueKey>
+  <fieldType name="boolean" class="solr.BoolField"/>
+  <fieldType name="booleans" class="solr.BoolField" sortMissingLast="true" multiValued="true"/>
+  <fieldType name="long" class="solr.TrieLongField"/>
+  <fieldType name="pdates" class="solr.DatePointField" docValues="true" multiValued="true"/>
+  <fieldType name="pdoubles" class="solr.DoublePointField" docValues="true" multiValued="true"/>
+  <fieldType name="plongs" class="solr.LongPointField" docValues="true" multiValued="true"/>
+  <fieldType name="string" class="solr.StrField"/>
+  <fieldType name="text" class="solr.TextField" positionIncrementGap="100">
+    <analyzer type="index">
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt"/>
+      <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" catenateAll="0" splitOnCaseChange="1" catenateNumbers="1" catenateWords="1" generateNumberParts="1"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.EnglishPossessiveFilterFactory"/>
+      <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+      <filter class="solr.EnglishMinimalStemFilterFactory"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer class="solr.StandardTokenizerFactory"/>
+      <filter class="solr.SynonymFilterFactory" synonyms="synonyms.txt" expand="true" ignoreCase="true"/>
+      <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_en.txt"/>
+      <filter class="solr.WordDelimiterFilterFactory" generateWordParts="1" catenateAll="0" splitOnCaseChange="1" catenateNumbers="0" catenateWords="0" generateNumberParts="1"/>
+      <filter class="solr.LowerCaseFilterFactory"/>
+      <filter class="solr.EnglishPossessiveFilterFactory"/>
+      <filter class="solr.KeywordMarkerFilterFactory" protected="protwords.txt"/>
+      <filter class="solr.EnglishMinimalStemFilterFactory"/>
+    </analyzer>
+  </fieldType>
+  <fieldType name="text_general" class="solr.TextField" positionIncrementGap="100" multiValued="true">
+    <analyzer type="index">
+      <tokenizer name="standard"/>
+      <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
+      <filter name="lowercase"/>
+    </analyzer>
+    <analyzer type="query">
+      <tokenizer name="standard"/>
+      <filter name="stop" ignoreCase="true" words="stopwords.txt"/>
+      <filter synonyms="synonyms.txt" name="synonymGraph" expand="true" ignoreCase="true"/>
+      <filter name="lowercase"/>
+    </analyzer>
+  </fieldType>
+  <field name="_version_" type="long" indexed="true" stored="true"/>
+  <field name="bcc" type="text" indexed="true" stored="false"/>
+  <field name="body" type="text" indexed="true" stored="false"/>
+  <field name="box" type="string" indexed="true" required="true" stored="true"/>
+  <field name="cc" type="text" indexed="true" stored="false"/>
+  <field name="from" type="text" indexed="true" stored="false"/>
+  <field name="hdr" type="text" indexed="true" stored="false"/>
+  <field name="id" type="string" indexed="true" required="true" stored="true"/>
+  <field name="subject" type="text" indexed="true" stored="false"/>
+  <field name="to" type="text" indexed="true" stored="false"/>
+  <field name="uid" type="long" indexed="true" required="true" stored="true"/>
+  <field name="user" type="string" indexed="true" required="true" stored="true"/>
+</schema>

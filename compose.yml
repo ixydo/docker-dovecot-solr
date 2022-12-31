@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  solr:
+    image: solr:9
+    environment:
+      - SOLR_JAVA_MEM=-Xms${JAVA_MIN_MEMORY:-512m} -Xmx${JAVA_MAX_MEMORY:-1024m}
+    ports:
+     - "${PORTS:-8983:8983}"
+    volumes:
+      - ./var_solr:/var/solr
+    command:
+      - solr-precreate
+      - dovecot
+    restart: unless-stopped
