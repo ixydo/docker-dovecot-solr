@@ -1,0 +1,10 @@
+{
+	"authentication":{
+		"blockUnknown": true,
+		"class":"solr.BasicAuthPlugin",
+		"credentials":{
+			"dovecot": "ER7WeCUzD6KKabguFFBd81idjudpXrIRtRqCYY9EVzQ= cERxd2lsM0tnVTJTV1JyWA==",
+		},
+		"forwardCredentials": false
+	}
+}

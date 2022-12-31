@@ -1,0 +1,25 @@
+#!/usr/bin/env -iS python3
+
+GENERATED_PASSWORD_LENGTH=32
+SALT_LENGTH=16
+
+from random import sample
+from string import digits, ascii_letters
+from hashlib import sha256
+from base64 import b64encode
+
+def hashAndSaltSolrPassword(password):
+	salt = "".join(sample(digits + ascii_letters, SALT_LENGTH))
+	saltedPassword = salt + str(password)
+	hashBufferFirstPass = sha256(saltedPassword.encode('utf-8'))
+	hashBufferSecondPass = sha256(hashBufferFirstPass.digest())
+	hashBase64 = str(b64encode(hashBufferSecondPass.digest()), 'ascii')
+	saltBase64 = str(b64encode(bytes(salt, 'utf-8')), 'ascii')
+	return f"{hashBase64} {saltBase64}"
+
+if __name__ == "__main__":
+	password = input("Enter a password, or press enter to generate a random password: ")
+	if len(password) == 0:
+		password = "".join(sample(digits + ascii_letters, GENERATED_PASSWORD_LENGTH))
+		print(f"Generated random password: {password}")
+	print(hashAndSaltSolrPassword(password))
